@@ -38,10 +38,10 @@ public class elipse {
         {
 
             // adicionando pontos basseado na simetria de 4 lados
-            resultado.add(new Ponto(new int[][] {{(int) x},{(int) y},{1}}));
-            resultado.add(new Ponto(new int[][] {{(int) x},{(int) -y},{1}}));
-            resultado.add(new Ponto(new int[][] {{(int) -x},{(int) y},{1}}));
-            resultado.add(new Ponto(new int[][] {{(int) -x},{(int) -y},{1}}));
+            resultado.add(new Ponto(new double[][] {{(int) x},{(int) y},{1}}));
+            resultado.add(new Ponto(new double[][] {{(int) x},{(int) -y},{1}}));
+            resultado.add(new Ponto(new double[][] {{(int) -x},{(int) y},{1}}));
+            resultado.add(new Ponto(new double[][] {{(int) -x},{(int) -y},{1}}));
 
             // Checking and updating value of
             // decision parameter based on algorithm
@@ -70,10 +70,10 @@ public class elipse {
         while (y >= 0) {
 
             // adicionando pontos basseado na simetria de 4 lados
-            resultado.add(new Ponto(new int[][] {{(int) x},{(int) y},{1}}));
-            resultado.add(new Ponto(new int[][] {{(int) -x},{(int) y},{1}}));
-            resultado.add(new Ponto(new int[][] {{(int) x},{(int) -y},{1}}));
-            resultado.add(new Ponto(new int[][] {{(int) -x},{(int) -y},{1}}));
+            resultado.add(new Ponto(new double[][] {{(int) x},{(int) y},{1}}));
+            resultado.add(new Ponto(new double[][] {{(int) -x},{(int) y},{1}}));
+            resultado.add(new Ponto(new double[][] {{(int) x},{(int) -y},{1}}));
+            resultado.add(new Ponto(new double[][] {{(int) -x},{(int) -y},{1}}));
 
             // Checking and updating parameter
             // value based on algorithm

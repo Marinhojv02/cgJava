@@ -1,28 +1,31 @@
 package org.example.Matrizes;
 
 import java.util.ArrayList;
-import org.netlib.blas.Dgemm;
 
 public class Matrizes {
-    ArrayList<int[][]> matrizes;
+    ArrayList<double[][]> matrizes;
     ArrayList<Ponto> pontos;
+    double[][] matrizM;
 
     public Matrizes(){
-        matrizes = new ArrayList<int[][]>();
-        pontos = new ArrayList<Ponto>();
+        matrizes = new ArrayList<>();
+        pontos = new ArrayList<>();
     }
 
-    public Matrizes(ArrayList<int[][]> listaMatrizes){
-        matrizes = new ArrayList<int[][]>(listaMatrizes);
-        pontos = new ArrayList<Ponto>();
+    public Matrizes(ArrayList<double[][]> listaMatrizes){
+        matrizes = new ArrayList<>(listaMatrizes);
+        pontos = new ArrayList<>();
     }
 
-    public void addMatriz(int[][] newMatriz){
+    public void addMatriz(double[][] newMatriz){
         matrizes.add(0, newMatriz);
+    }
+    public void addPonto(Ponto newPonto){
+        pontos.add( newPonto);
     }
 
     //função para multiplicar matrizes
-    public static int[][] multiplicaMatriz(int[][] matriz1, int[][] matriz2) {
+    public static double[][] multiplicaMatriz(double[][] matriz1, double[][] matriz2) {
         int m1Rows = matriz1.length;
         int m1Cols = matriz1[0].length;
         int m2Rows = matriz2.length;
@@ -34,7 +37,7 @@ public class Matrizes {
         }
 
         //estrutura que multiplica as matrizes
-        int[][] resultado = new int[m1Rows][m2Cols];
+        double[][] resultado = new double[m1Rows][m2Cols];
         for (int i = 0; i < m1Rows; i++) {
             for (int j = 0; j < m2Cols; j++) {
                 for (int k = 0; k < m1Cols; k++) {
@@ -46,41 +49,44 @@ public class Matrizes {
     }
 
 
-    //multiplica todas as matrizes (para composição e aplicar transformações em objetos complexos)
-    public int[][] multiplicaTudo(){
-        //se nao ha matrizes retorna erro
+    //multiplica a sequencia de matrizes a fim de retornar a matriz M
+    public double[][] relizaComposicao(){
+        //retorna erro caso nenhuma matriz seja fornecida
         if(matrizes == null || matrizes.size() == 0){
             throw new IllegalArgumentException("No matrix was provided");
         }
-        //se só ha uma matriz retorna ela
-        if(matrizes.size() == 1 && pontos.size() == 0){
-            return matrizes.get(0);
-        }
 
         //efetua a multiplicação de todas as matrizes e armazena o resultado na variavel "resultado"
-        int[][] resultado;
-        resultado = multiplicaMatriz(matrizes.get(0), matrizes.get(1));
-        for (int i = 2; i < matrizes.size(); i++) {
+        double[][] resultado = matrizes.get(0);
+
+        for (int i = 1; i < matrizes.size(); i++) {
             resultado = multiplicaMatriz(resultado, matrizes.get(i));
             System.out.println(i);
-        }
-
-        //caso haja pontos é calculada a multiplicação da matriz com eles, caso contrario retorna o resultado
-        if(pontos != null && pontos.size() > 0){
-            for (int i = 0; i < pontos.size()-1; i++) {
-                resultado = multiplicaMatriz(resultado, pontos.get(i).getCoordenada());
-            }
         }
 
         return resultado;
     }
 
+    //funcao para realizar transformacao nos pontos
+    public ArrayList<Ponto> transformaPonto(){
+        //retorna erro caso nenhum ponto seja fornecido
+        if(pontos == null || pontos.size() == 0){
+            throw new IllegalArgumentException("No position was provided");
+        }
+
+        for (Ponto ponto:pontos) {
+            ponto.setCoordenada(multiplicaMatriz(matrizM, ponto.getCoordenada()));
+        }
+
+        return pontos;
+    }
+
     //gets e sets
-    public ArrayList<int[][]> getMatrizes() {
+    public ArrayList<double[][]> getMatrizes() {
         return matrizes;
     }
 
-    public void setMatrizes(ArrayList<int[][]> matrizes) {
+    public void setMatrizes(ArrayList<double[][]> matrizes) {
         this.matrizes = matrizes;
     }
 
@@ -90,5 +96,12 @@ public class Matrizes {
 
     public void setPontos(ArrayList<Ponto> pontos) {
         this.pontos = pontos;
+    }
+    public void gerarMatrizM(){
+        matrizM = relizaComposicao();
+    }
+
+    public double[][] getMatrizM(){
+        return matrizM;
     }
 }

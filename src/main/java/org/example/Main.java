@@ -11,9 +11,14 @@ import java.util.Arrays;
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
     public static void main(String[] args) {
-        Reta retaTeste = new Reta(new Ponto(new int[][] {{-11},{20},{1}}), new Ponto(new int[][] {{-10},{40},{1}}));
+        Matrizes teste = new Matrizes();
 
-        ArrayList<Ponto> teste = retaTeste.retaDDA();
+        double[][] matriz1 = {{2,0,0},{0,1,0},{0,0,1}};
+        Ponto testePonto = new Ponto(new double[][]{{5},{1},{1}});
 
+        teste.addMatriz(matriz1);
+        teste.addPonto(testePonto);
+
+        System.out.println(Arrays.deepToString(teste.relizaComposicao()));
     }
 }
